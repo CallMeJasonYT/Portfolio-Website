@@ -1,13 +1,13 @@
 import type { Metadata, Viewport } from "next";
 import { ReactNode } from "react";
-import { Roboto } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import { cn } from "@/lib/utils";
 import "./globals.css";
 import BackgroundPattern from "@/components/bg-pattern";
 import VignetteBackground from "@/components/vignette-bg";
 import Navbar from "@/components/navbar";
 
-const roboto = Roboto({
+const montserrat = Montserrat({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
@@ -27,7 +27,10 @@ const RootLayout = ({
 }>) => (
   <html lang="en" suppressHydrationWarning>
     <body
-      className={cn("antialiased scroll-smooth select-none", roboto.className)}
+      className={cn(
+        "antialiased scroll-smooth select-none",
+        montserrat.className
+      )}
     >
       <div className="relative min-h-screen">
         {/* Backgrounds */}

@@ -118,7 +118,7 @@ const Navbar = (): ReactElement => {
                   ? "px-2 sm:px-2.5 md:px-3 py-1.5"
                   : "px-2 sm:px-2.5 py-2",
                 "flex gap-1.5 sm:gap-2.5 items-center hover:bg-zinc-700/30 font-light rounded-2xl transition-all transform-gpu",
-                active && "bg-zinc-900/55 text-primary"
+                active && "bg-zinc-700/30 text-primary"
               )}
               href={link.href}
               draggable={false}
