@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import "./globals.css";
 import BackgroundPattern from "@/components/bg-pattern";
 import VignetteBackground from "@/components/vignette-bg";
+import Navbar from "@/components/navbar";
 
 const roboto = Roboto({
   variable: "--font-geist-sans",
@@ -32,6 +33,7 @@ const RootLayout = ({
         {/* Backgrounds */}
         <VignetteBackground />
         <BackgroundPattern />
+        <Navbar />
         <div className="mx-auto max-w-screen-3xl relative">{children}</div>
       </div>
     </body>
