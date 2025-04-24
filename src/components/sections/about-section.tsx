@@ -9,77 +9,95 @@ import SimpleTooltip from "@/components/simple-tooltip";
 import { type Skill, type SocialConfig } from "@/types/app-config";
 
 const AboutSection = (): ReactElement => (
-  <section id="about" className="flex flex-col gap-4">
-    {/* Hire Me */}
-    <Link
-      className="w-fit"
-      href={appConfig.socials.Email.href}
-      draggable={false}
+  <section id="about" className="flex flex-col md:flex-row items-start">
+    <motion.div
+      className="items-center flex-col gap-5 hidden md:flex w-full md:w-1/3 lg:w-1/4 h-72 md:h-auto rounded-xl overflow-hidden shadow-lg"
+      initial={{ opacity: 0, x: -30 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.6 }}
     >
-      <motion.div
-        className="group w-fit px-3 py-1.5 flex gap-2 items-center text-sm text-white/90 font-light bg-primary/10 border border-border rounded-xl hover:bg-primary/15 transition-colors transform-gpu"
-        initial={{ opacity: 0, y: -20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.5 }}
-      ></motion.div>
-    </Link>
-
-    {/* Name, Title, & Socials */}
-    <div className="flex flex-col gap-2.5">
+      <Image
+        className="rounded-full aspect-square object-cover"
+        src="/media/me.jpg"
+        alt="Hey, it's me!"
+        width={170}
+        height={170}
+        priority
+        draggable={false}
+      />
       <motion.h1
-        className="text-5xl font-bold text-white"
+        className="flex gap-2.5 items-center"
         initial={{ opacity: 0, y: -20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.5, delay: 0.1 }}
-      >
-        I&apos;m Jason Pavlopoulos
-      </motion.h1>
-      <motion.p
-        className="text-lg font-semibold text-muted-foreground"
-        initial={{ opacity: 0, y: -20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
+        animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
       >
-        Full Stack Software Engineer
+        <Image
+          src="/media/wave.gif"
+          alt="Waving Hand"
+          width={28}
+          height={28}
+          draggable={false}
+        />
+        <span className="text-xl text-white font-semibold">
+          Hi, I&apos;m Jason!
+        </span>
+      </motion.h1>
+    </motion.div>
+
+    {/* Right: Content */}
+    <div className="flex flex-col gap-4 md:w-1/2">
+      {/* Header and Socials */}
+      <div className="flex flex-col gap-2.5">
+        <motion.h1
+          className="text-4xl md:text-5xl font-bold text-white"
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+        >
+          I&apos;m Jason Pavlopoulos
+        </motion.h1>
+        <motion.p
+          className="text-lg font-semibold text-muted-foreground"
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          Full Stack Software Engineer
+        </motion.p>
+
+        <div className="flex gap-2 items-center">
+          {Object.values(appConfig.socials).map((social, index) => (
+            <SocialLink key={social.href} social={social} index={index} />
+          ))}
+        </div>
+      </div>
+
+      {/* About */}
+      <motion.p
+        className="max-w-xl text-lg font-light text-muted-foreground"
+        initial={{ opacity: 0, y: -20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.3 }}
+      >
+        {appConfig.about}
       </motion.p>
 
-      {/* Socials */}
-      <div className="flex gap-2 items-center">
-        {Object.values(appConfig.socials).map(
-          (social: SocialConfig, index: number) => (
-            <SocialLink key={social.href} social={social} index={index} />
-          )
-        )}
-      </div>
+      {/* Skills */}
+      <motion.div
+        className="max-w-xl flex flex-wrap gap-2"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{
+          duration: 0.5,
+          delay: 0.5,
+          staggerChildren: 0.05,
+          delayChildren: 0.1,
+        }}
+      >
+        {/* Skill chips go here */}
+      </motion.div>
     </div>
-
-    {/* About Me */}
-    <motion.p
-      className="max-w-xl text-lg font-light text-muted-foreground"
-      initial={{ opacity: 0, y: -20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.5, delay: 0.3 }}
-    >
-      {appConfig.about}
-    </motion.p>
-
-    {/* Skills */}
-    <motion.div
-      className="max-w-xl flex flex-wrap gap-2"
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true, margin: "-100px" }}
-      transition={{
-        duration: 0.5,
-        delay: 0.5,
-        staggerChildren: 0.05,
-        delayChildren: 0.1,
-      }}
-    ></motion.div>
   </section>
 );
 
@@ -108,46 +126,6 @@ const SocialLink = ({
       >
         <social.icon className="size-4" />
         <span>{social.name}</span>
-      </Link>
-    </SimpleTooltip>
-  </motion.div>
-);
-
-const Skill = ({
-  skill,
-  index,
-}: {
-  skill: Skill;
-  index: number;
-}): ReactElement => (
-  <motion.div
-    variants={{
-      hidden: { opacity: 0, scale: 0.8 },
-      visible: {
-        opacity: 1,
-        scale: 1,
-        transition: {
-          delay: 0.5 + index * 0.07,
-          duration: 0.3,
-          ease: "easeOut",
-        },
-      },
-    }}
-  >
-    <SimpleTooltip content={skill.name} side="bottom">
-      <Link
-        className="flex items-center gap-2 hover:opacity-75 transition-opacity transform-gpu"
-        href={skill.link}
-        target="_blank"
-        draggable={false}
-      >
-        <Image
-          src={skill.icon}
-          alt={skill.name}
-          width={32}
-          height={32}
-          draggable={false}
-        />
       </Link>
     </SimpleTooltip>
   </motion.div>
