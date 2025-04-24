@@ -7,6 +7,7 @@ import {
   IconMedal,
   IconBriefcase,
   IconMail,
+  IconBolt,
   TablerIcon,
 } from "@tabler/icons-react";
 import { motion } from "motion/react";
@@ -26,6 +27,7 @@ type NavbarLink = {
 const links: NavbarLink[] = [
   { icon: IconHome, tooltip: "Back to the start of the page", href: "/" },
   { name: "About me", icon: IconUser, tooltip: "About me", href: "/#about" },
+  { name: "Skills", icon: IconBolt, tooltip: "My skillset", href: "/#skills" },
   {
     name: "Experience",
     icon: IconMedal,
@@ -96,7 +98,7 @@ const Navbar = (): ReactElement => {
   return (
     <motion.nav
       className={cn(
-        "fixed top-3.5 right-3.5 sm:inset-x-0 w-fit p-1 mx-auto flex gap-1 items-center text-sm text-white/85 bg-background/50 backdrop-blur-sm border border-border rounded-2xl duration-250 transition-all transform-gpu z-50",
+        "fixed top-3.5 inset-x-0 w-fit p-1 mx-auto flex gap-1 items-center text-sm text-white/85 bg-background/50 backdrop-blur-sm border border-border rounded-2xl duration-250 transition-all transform-gpu z-50",
         hasScrolled &&
           "top-0 right-0 rounded-t-none rounded-br-none sm:rounded-br-2xl"
       )}
@@ -114,38 +116,21 @@ const Navbar = (): ReactElement => {
           <SimpleTooltip key={index} content={link.tooltip} side="bottom">
             <Link
               className={cn(
-                link.name
-                  ? "px-2 sm:px-2.5 md:px-3 py-1.5"
-                  : "px-2 sm:px-2.5 py-2",
-                "flex gap-1.5 sm:gap-2.5 items-center hover:bg-zinc-700/30 font-light rounded-2xl transition-all transform-gpu",
+                "px-[2px] sm:px-2.5 md:px-3 py-1.5",
+                "text-xs flex gap-1.5 sm:gap-2.5 sm:text-sm items-center hover:bg-zinc-700/30 font-light rounded-2xl transition-all transform-gpu",
                 active && "bg-zinc-700/30 text-primary"
               )}
               href={link.href}
               draggable={false}
             >
-              <link.icon className="size-4" />
+              <link.icon
+                className={cn(
+                  link.href === "/" ? "block" : "hidden sm:block",
+                  "size-4"
+                )}
+              />
 
-              {link.name && (
-                <>
-                  {/* Mobile name (only shows when active) */}
-                  <motion.span
-                    className={cn(!active && "hidden")}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{
-                      opacity: active ? 1 : 0,
-                      x: active ? 0 : -10,
-                    }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    {link.name}
-                  </motion.span>
-
-                  {/* Desktop name (always visible) */}
-                  <span className={cn("hidden", !active && "sm:block")}>
-                    {link.name}
-                  </span>
-                </>
-              )}
+              {link.name && <span className="block">{link.name}</span>}
             </Link>
           </SimpleTooltip>
         );

@@ -66,7 +66,7 @@ const AboutSection = (): ReactElement => (
           Full Stack Software Engineer
         </motion.p>
 
-        <div className="flex gap-2 items-center">
+        <div className="flex flex-wrap gap-2 items-center">
           {Object.values(appConfig.socials).map((social, index) => (
             <SocialLink key={social.href} social={social} index={index} />
           ))}
