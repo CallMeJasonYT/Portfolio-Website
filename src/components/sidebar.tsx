@@ -19,13 +19,13 @@ const Sidebar = ({ profileImage, name }: SidebarProps): ReactElement => {
       className={cn(
         // Hide on small screens, show on md and above
         "hidden lg:flex",
-        "fixed left-0 top-0 h-screen bg-zinc-900/30 backdrop-blur-md border-r border-border",
+        "fixed left-0 top-0 h-screen bg-zinc-900/10 backdrop-blur-md border-r border-border",
         "flex-col items-center pt-32 pb-8 px-6",
-        "w-60 shadow-xl z-40"
+        "w-60 lg:w-70 shadow-xl z-40"
       )}
     >
       {/* Profile image */}
-      <div className="relative w-35 h-35 mb-6 rounded-full overflow-hidden border-2 border-primary/50">
+      <div className="relative w-35 h-35 lg:w-40 lg:h-40 mb-6 rounded-full overflow-hidden border-2 border-primary/50">
         <Image
           src={profileImage}
           alt={name}

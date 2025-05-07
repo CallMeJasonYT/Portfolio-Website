@@ -2,11 +2,10 @@
 
 import { motion } from "motion/react";
 import Link from "next/link";
-import Image from "next/image";
 import { ReactElement } from "react";
 import { appConfig } from "@/app/config";
 import SimpleTooltip from "@/components/simple-tooltip";
-import { type Skill, type SocialConfig } from "@/types/app-config";
+import { type SocialConfig } from "@/types/app-config";
 
 const AboutSection = (): ReactElement => (
   <section id="about" className="flex flex-col md:flex-row items-start">

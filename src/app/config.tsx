@@ -1,8 +1,8 @@
 import { differenceInYears } from "date-fns";
 import {
-  IconMail,
   IconBrandGithub,
   IconBrandLinkedin,
+  IconMail,
   IconFileCv,
 } from "@tabler/icons-react";
 import { AppConfig } from "@/types/app-config";
@@ -15,28 +15,29 @@ export const appConfig: AppConfig = {
     Linkedin: {
       name: "LinkedIn",
       icon: IconBrandLinkedin,
-      tooltip: "Find me on LinkedIn",
-      href: "https://www.linkedin.com/in/jasonpavlop/",
+      tooltip: "Connect with me on LinkedIn",
+      href: "https://linkedin.com/in/jasonpavlopoulos",
     },
     Github: {
       name: "GitHub",
       icon: IconBrandGithub,
-      tooltip: "Check my GitHub",
-      href: "https://github.com/CallMeJasonYT",
+      tooltip: "Check out my repositories",
+      href: "https://github.com/jasonpavlopoulos",
     },
     Email: {
       name: "Email",
       icon: IconMail,
       tooltip: "Send me an email",
-      href: "mailto:jasonpavlop1@gmail.com",
+      href: "mailto:contact@jasonpavlopoulos.com",
     },
     Resume: {
       name: "Resume",
       icon: IconFileCv,
-      tooltip: "Download my CV",
-      href: "", // To be completed
+      tooltip: "Download my resume",
+      href: "/resume.pdf",
     },
   },
+
   about: (
     <span>
       A <b className="text-primary/90">{age} year old</b> web developer and
@@ -47,4 +48,106 @@ export const appConfig: AppConfig = {
       meaningful projects.
     </span>
   ),
+
+  skills: {
+    Frontend: [
+      {
+        name: "React",
+        icon: "https://img.icons8.com/color/2x/react-native.png",
+      },
+      {
+        name: "Next.js",
+        icon: "https://img.icons8.com/?size=100&id=MWiBjkuHeMVq&format=png&color=000000",
+      },
+      {
+        name: "TypeScript",
+        icon: "https://img.icons8.com/fluent/2x/typescript.png",
+      },
+      {
+        name: "Tailwind CSS",
+        icon: "https://img.icons8.com/color/2x/tailwindcss.png",
+      },
+      {
+        name: "HTML 5",
+        icon: "https://img.icons8.com/color/2x/html-5.png",
+      },
+      {
+        name: "CSS",
+        icon: "https://img.icons8.com/color/2x/css3.png",
+      },
+      {
+        name: "Javascript",
+        icon: "https://img.icons8.com/color/2x/javascript.png",
+      },
+    ],
+
+    Backend: [
+      {
+        name: "Node.js",
+        icon: "https://img.icons8.com/color/2x/nodejs.png",
+      },
+      {
+        name: "Express",
+        icon: "https://img.icons8.com/color/2x/express-js.png",
+      },
+      {
+        name: "Rest API",
+        icon: "https://img.icons8.com/?size=100&id=50196&format=png&color=000000",
+      },
+      {
+        name: "MongoDB",
+        icon: "https://img.icons8.com/color/2x/mongo-db.png",
+      },
+      {
+        name: "MySQL",
+        icon: "https://img.icons8.com/color/2x/mysql.png",
+      },
+      {
+        name: "PostgreSQL",
+        icon: "https://img.icons8.com/?size=100&id=38561&format=png&color=000000",
+      },
+    ],
+
+    "UI/UX": [
+      {
+        name: "Figma",
+        icon: "https://img.icons8.com/color/2x/figma.png",
+      },
+      {
+        name: "Adobe Photoshop",
+        icon: "https://img.icons8.com/color/2x/adobe-photoshop.png",
+      },
+      {
+        name: "Adobe Premiere Pro",
+        icon: "https://img.icons8.com/color/2x/adobe-premiere-pro.png",
+      },
+      {
+        name: "Adobe InDesign",
+        icon: "https://img.icons8.com/color/2x/adobe-indesign.png",
+      },
+    ],
+
+    Environment: [
+      {
+        name: "Git",
+        icon: "https://img.icons8.com/color/2x/git.png",
+      },
+      {
+        name: "Docker",
+        icon: "https://img.icons8.com/color/2x/docker.png",
+      },
+      {
+        name: "VS Code",
+        icon: "https://img.icons8.com/color/2x/visual-studio-code-2019.png",
+      },
+      {
+        name: "npm",
+        icon: "https://img.icons8.com/color/2x/npm.png",
+      },
+      {
+        name: "Linux",
+        icon: "https://img.icons8.com/color/2x/linux.png",
+      },
+    ],
+  },
 };
