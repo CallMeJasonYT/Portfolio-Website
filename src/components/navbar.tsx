@@ -116,8 +116,8 @@ const Navbar = (): ReactElement => {
           <SimpleTooltip key={index} content={link.tooltip} side="bottom">
             <Link
               className={cn(
-                "px-[2px] sm:px-2.5 md:px-3 py-1.5",
-                "text-xs flex gap-1.5 sm:gap-2.5 sm:text-sm items-center hover:bg-zinc-700/30 font-light rounded-2xl transition-all transform-gpu",
+                "px-[2px] sm:px-2 py-1.5",
+                "text-xs flex gap-1.5 sm:text-sm items-center hover:bg-zinc-700/30 font-light rounded-2xl transition-all transform-gpu",
                 active && "bg-zinc-700/30 text-primary"
               )}
               href={link.href}

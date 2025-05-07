@@ -8,10 +8,9 @@ import { appConfig } from "@/app/config";
 import SimpleTooltip from "@/components/simple-tooltip";
 import { type Skill, type SocialConfig } from "@/types/app-config";
 
-const AboutSection = (): ReactElement => (
+const SkillSection = (): ReactElement => (
   <section id="about" className="flex flex-col md:flex-row items-start">
-    {/* Right: Content */}
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 md:w-1/2">
       {/* Header and Socials */}
       <div className="flex flex-col gap-2.5">
         <motion.h1
@@ -96,4 +95,4 @@ const SocialLink = ({
   </motion.div>
 );
 
-export default AboutSection;
+export default SkillSection;
