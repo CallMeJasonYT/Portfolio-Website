@@ -1,6 +1,7 @@
 import { ReactElement } from "react";
 import AboutSection from "@/components/sections/about-section";
 import SkillSection from "@/components/sections/skills-section";
+import ExperienceSection from "@/components/sections/experience-section";
 
 export const dynamic = "force-dynamic";
 
@@ -10,6 +11,7 @@ const LandingPage = (): ReactElement => (
     <div className="relative w-full px-7 md:px-10 xl:px-16 pt-32 flex flex-col transition-all transform-gpu overflow-hidden">
       <AboutSection />
       <SkillSection />
+      <ExperienceSection />
     </div>
   </main>
 );

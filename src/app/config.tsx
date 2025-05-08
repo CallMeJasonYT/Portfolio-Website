@@ -88,7 +88,7 @@ export const appConfig: AppConfig = {
       },
       {
         name: "Express",
-        icon: "https://img.icons8.com/color/2x/express-js.png",
+        icon: "https://img.icons8.com/?size=100&id=2ZOaTclOqD4q&format=png&color=000000",
       },
       {
         name: "Rest API",
@@ -105,6 +105,14 @@ export const appConfig: AppConfig = {
       {
         name: "PostgreSQL",
         icon: "https://img.icons8.com/?size=100&id=38561&format=png&color=000000",
+      },
+      {
+        name: "Apache Spark",
+        icon: "https://img.icons8.com/color/2x/apache-spark.png",
+      },
+      {
+        name: "Apache Kafka",
+        icon: "https://img.icons8.com/?size=100&id=fOhLNqGJsUbJ&format=png&color=000000",
       },
     ],
 
@@ -147,6 +155,25 @@ export const appConfig: AppConfig = {
       {
         name: "Linux",
         icon: "https://img.icons8.com/color/2x/linux.png",
+      },
+    ],
+  },
+  experience: {
+    Career: [],
+    Education: [
+      {
+        institution: "University of Patras",
+        icon: "media/ceid.png",
+        degree: "MSc in Computer Engineering",
+        location: "Patra, Greece",
+        timeframe: "Sept. 2024 - Now",
+      },
+      {
+        institution: "University of Patras",
+        icon: "media/ceid.png",
+        degree: "BSc in Computer Engineering",
+        location: "Patra, Greece",
+        timeframe: "Sept. 2020 - July 2024",
       },
     ],
   },

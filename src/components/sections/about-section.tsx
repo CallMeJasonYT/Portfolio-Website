@@ -8,7 +8,10 @@ import SimpleTooltip from "@/components/simple-tooltip";
 import { type SocialConfig } from "@/types/app-config";
 
 const AboutSection = (): ReactElement => (
-  <section id="about" className="flex flex-col md:flex-row items-start">
+  <section
+    id="about"
+    className="pt-0 py-20 flex flex-col md:flex-row items-start"
+  >
     {/* Right: Content */}
     <div className="flex flex-col gap-4">
       {/* Header and Socials */}
