@@ -10,7 +10,6 @@ const ExperienceSection = (): ReactElement => {
     appConfig.experience
   ) as ExperienceCategoryType[];
 
-  // State to track the active category
   const [activeCategory, setActiveCategory] = useState<ExperienceCategoryType>(
     experienceCategories[0]
   );
@@ -24,7 +23,6 @@ const ExperienceSection = (): ReactElement => {
           transition={{ duration: 0.6 }}
           className="flex flex-col gap-10"
         >
-          {/* Section header */}
           <div className="flex flex-col gap-2 max-w-3xl">
             <motion.h1
               className="text-3xl font-bold flex flex-row text-white gap-2"
@@ -78,85 +76,52 @@ const ExperienceSection = (): ReactElement => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            {activeCategory === "Career" &&
-            appConfig.experience[activeCategory].length === 0 ? (
-              <motion.div
-                className="relative pl-10 border-l-2 border-primary/30 ml-4"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.4 }}
-              >
-                {/* Use a timeline dot since there's no icon */}
-                <div className="absolute -left-[9px] top-0 h-4 w-4 rounded-full bg-primary"></div>
-
-                {/* Status */}
-                <span className="inline-block px-3 py-1 mb-2 text-xs font-medium rounded-full bg-primary/10 text-primary">
-                  Available Now
-                </span>
-
-                {/* Position/Title */}
-                <h3 className="text-xl font-bold text-white">
-                  Looking to be hired
-                </h3>
-
-                {/* Description */}
-                <p className="text-muted-foreground">
-                  I'm currently seeking new opportunities in software
-                  development. Feel free to contact me with any potential roles
-                  or projects!
-                </p>
-              </motion.div>
-            ) : (
-              <div className="space-y-12">
-                {appConfig.experience[activeCategory]?.map((item, index) => (
-                  <motion.div
-                    key={`${activeCategory}-${index}`}
-                    className="relative pl-10 md:pl-14 border-l-2 border-primary/30 ml-4"
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.4, delay: index * 0.1 }}
-                  >
-                    {/* Icon in place of timeline dot */}
-                    {item.icon ? (
-                      <div className="absolute -left-[24px] top-0">
-                        <div className="h-12 w-12 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center border border-primary shadow-lg overflow-hidden">
-                          <img
-                            src={item.icon}
-                            alt={`${item.institution} icon`}
-                            className="h-full w-full object-cover"
-                          />
-                        </div>
+            <div className="space-y-12">
+              {appConfig.experience[activeCategory]?.map((item, index) => (
+                <motion.div
+                  key={`${activeCategory}-${index}`}
+                  className="relative pl-10 md:pl-14 border-l-2 border-primary/30 ml-4"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.4, delay: index * 0.1 }}
+                >
+                  {item.icon ? (
+                    <div className="absolute -left-[24px] top-0">
+                      <div className="h-12 w-12 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center border border-primary shadow-lg overflow-hidden">
+                        <img
+                          src={item.icon}
+                          alt={`${item.institution} icon`}
+                          className="h-full w-full object-cover"
+                        />
                       </div>
-                    ) : (
-                      <div className="absolute -left-[9px] top-0 h-4 w-4 rounded-full bg-primary"></div>
+                    </div>
+                  ) : (
+                    <div className="absolute -left-[9px] top-0 h-4 w-4 rounded-full bg-primary"></div>
+                  )}
+
+                  <span className="inline-block px-3 py-1 mb-2 text-xs font-medium rounded-full bg-primary/10 text-primary">
+                    {item.timeframe}
+                  </span>
+
+                  <h3 className="text-xl font-bold text-white">
+                    {item.role || item.degree}
+                  </h3>
+
+                  <h4 className="text-lg font-medium text-primary mb-2">
+                    {item.institution}
+                    {item.location && (
+                      <span className="text-muted-foreground text-sm ml-2">
+                        • {item.location}
+                      </span>
                     )}
+                  </h4>
 
-                    <span className="inline-block px-3 py-1 mb-2 text-xs font-medium rounded-full bg-primary/10 text-primary">
-                      {item.timeframe}
-                    </span>
-
-                    <h3 className="text-xl font-bold text-white">
-                      {item.role || item.degree}
-                    </h3>
-
-                    <h4 className="text-lg font-medium text-primary mb-2">
-                      {item.institution}
-                      {item.location && (
-                        <span className="text-muted-foreground text-sm ml-2">
-                          • {item.location}
-                        </span>
-                      )}
-                    </h4>
-
-                    {item.description && (
-                      <p className="text-muted-foreground">
-                        {item.description}
-                      </p>
-                    )}
-                  </motion.div>
-                ))}
-              </div>
-            )}
+                  {item.description && (
+                    <p className="text-muted-foreground">{item.description}</p>
+                  )}
+                </motion.div>
+              ))}
+            </div>
           </motion.div>
         </motion.div>
       </div>

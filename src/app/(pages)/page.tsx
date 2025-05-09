@@ -2,6 +2,7 @@ import { ReactElement } from "react";
 import AboutSection from "@/components/sections/about-section";
 import SkillSection from "@/components/sections/skills-section";
 import ExperienceSection from "@/components/sections/experience-section";
+import ProjectsSection from "@/components/sections/projects-section";
 
 export const dynamic = "force-dynamic";
 
@@ -12,6 +13,7 @@ const LandingPage = (): ReactElement => (
       <AboutSection />
       <SkillSection />
       <ExperienceSection />
+      <ProjectsSection />
     </div>
   </main>
 );

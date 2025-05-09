@@ -16,25 +16,25 @@ export const appConfig: AppConfig = {
       name: "LinkedIn",
       icon: IconBrandLinkedin,
       tooltip: "Connect with me on LinkedIn",
-      href: "https://linkedin.com/in/jasonpavlopoulos",
+      href: "https://www.linkedin.com/in/jasonpavlop/",
     },
     Github: {
       name: "GitHub",
       icon: IconBrandGithub,
       tooltip: "Check out my repositories",
-      href: "https://github.com/jasonpavlopoulos",
+      href: "https://github.com/CallMeJasonYT",
     },
     Email: {
       name: "Email",
       icon: IconMail,
       tooltip: "Send me an email",
-      href: "mailto:contact@jasonpavlopoulos.com",
+      href: "mailto:jasonpavlop1@gmail.com",
     },
     Resume: {
       name: "Resume",
       icon: IconFileCv,
       tooltip: "Download my resume",
-      href: "/resume.pdf",
+      href: "/media/resume.pdf",
     },
   },
 
@@ -159,7 +159,17 @@ export const appConfig: AppConfig = {
     ],
   },
   experience: {
-    Career: [],
+    Career: [
+      {
+        institution: "",
+        location: "",
+        icon: "",
+        role: "Looking to be hired",
+        timeframe: "Available Now",
+        description:
+          "I'm currently seeking new opportunities in software development. Feel free to contact me with any potential roles or projects!",
+      },
+    ],
     Education: [
       {
         institution: "University of Patras",

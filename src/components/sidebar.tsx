@@ -53,10 +53,17 @@ const Sidebar = ({ profileImage, name }: SidebarProps): ReactElement => {
       );
     }, 60000);
 
+    ("use client");
+
     const fetchWeather = async () => {
       try {
+        const apiKey = process.env.NEXT_PUBLIC_WEATHER_API_KEY;
+        // Use a public CORS proxy
+        const corsProxyUrl = "https://corsproxy.io/?";
+        const targetUrl = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=Patra,Greece&aqi=no`;
+
         const response = await fetch(
-          `https://api.weatherapi.com/v1/current.json?key=${process.env.NEXT_PUBLIC_WEATHER_API_KEY}&q=Patra,Greece&aqi=no`
+          corsProxyUrl + encodeURIComponent(targetUrl)
         );
 
         if (!response.ok) {
