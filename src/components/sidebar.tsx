@@ -5,14 +5,14 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { motion } from "motion/react";
 import { IconLocationPin } from "@tabler/icons-react";
+import {
+  getWeatherData,
+  type WeatherData as WeatherDataType,
+} from "@/actions/fetch-weather";
 
-type WeatherData = {
-  temperature: number;
-  weatherIcon: string;
-  location: string;
+type WeatherState = WeatherDataType & {
   isLoading: boolean;
   error: string | null;
-  time: string;
 };
 
 type SidebarProps = {
@@ -22,19 +22,17 @@ type SidebarProps = {
 
 const Sidebar = ({ profileImage, name }: SidebarProps): ReactElement => {
   const [time, setTime] = useState<string>("");
-  const [weather, setWeather] = useState<WeatherData>({
+  const [weather, setWeather] = useState<WeatherState>({
     temperature: 0,
     weatherIcon: "",
     location: "Patra, Greece",
+    time: "",
     isLoading: true,
     error: null,
-    time: new Date().toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit",
-    }),
   });
 
   useEffect(() => {
+    // Set initial time
     setTime(
       new Date().toLocaleTimeString([], {
         hour: "2-digit",
@@ -43,6 +41,7 @@ const Sidebar = ({ profileImage, name }: SidebarProps): ReactElement => {
       })
     );
 
+    // Update time every minute
     const timeInterval = setInterval(() => {
       setTime(
         new Date().toLocaleTimeString([], {
@@ -53,34 +52,26 @@ const Sidebar = ({ profileImage, name }: SidebarProps): ReactElement => {
       );
     }, 60000);
 
-    ("use client");
-
+    // Fetch weather data
     const fetchWeather = async () => {
       try {
-        const apiKey = process.env.WEATHER_API_KEY;
-        // Use a public CORS proxy
-        const corsProxyUrl = "https://corsproxy.io/?";
-        const targetUrl = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=Patra,Greece&aqi=no`;
+        setWeather((prev) => ({ ...prev, isLoading: true }));
 
-        const response = await fetch(
-          corsProxyUrl + encodeURIComponent(targetUrl)
-        );
+        const response = await getWeatherData("Patra, Greece");
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch weather data");
+        if (response.error) {
+          setWeather((prev) => ({
+            ...prev,
+            isLoading: false,
+            error: response.error,
+          }));
+        } else if (response.data) {
+          setWeather({
+            ...response.data,
+            isLoading: false,
+            error: null,
+          });
         }
-
-        const data = await response.json();
-
-        setWeather((prev) => ({
-          ...prev,
-          temperature: data.current?.temp_c || 0,
-          weatherIcon: data.current?.condition?.icon || "",
-          weatherCondition: data.current?.condition?.text || "",
-          location: data.location?.name || "Patra, Greece",
-          isLoading: false,
-          error: null,
-        }));
       } catch (error) {
         console.error("Error fetching weather:", error);
         setWeather((prev) => ({
@@ -91,10 +82,13 @@ const Sidebar = ({ profileImage, name }: SidebarProps): ReactElement => {
       }
     };
 
+    // Initial weather fetch
     fetchWeather();
 
+    // Fetch weather every 30 minutes
     const weatherInterval = setInterval(fetchWeather, 30 * 60 * 1000);
 
+    // Cleanup
     return () => {
       clearInterval(timeInterval);
       clearInterval(weatherInterval);
@@ -156,9 +150,18 @@ const Sidebar = ({ profileImage, name }: SidebarProps): ReactElement => {
           <div className="flex items-center gap-1">
             {weather.isLoading ? (
               <div className="animate-pulse h-10 w-10 bg-primary/30 rounded-full" />
+            ) : weather.error ? (
+              <div className="h-10 w-10 flex items-center justify-center">
+                <span className="text-red-400 text-xs">Error</span>
+              </div>
             ) : (
               <img
-                src={`https:${weather.weatherIcon}`}
+                src={
+                  weather.weatherIcon.startsWith("//")
+                    ? `https:${weather.weatherIcon}`
+                    : weather.weatherIcon
+                }
+                alt="Weather icon"
                 width={40}
                 height={40}
                 className="h-10 w-10 object-contain"
@@ -168,6 +171,8 @@ const Sidebar = ({ profileImage, name }: SidebarProps): ReactElement => {
               <span className="text-white text-lg">
                 {weather.isLoading ? (
                   <div className="animate-pulse h-5 w-16 bg-primary/30 rounded-md" />
+                ) : weather.error ? (
+                  <span className="text-red-400 text-sm">N/A</span>
                 ) : (
                   `${Math.round(weather.temperature)}°C`
                 )}
