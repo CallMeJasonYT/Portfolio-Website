@@ -58,7 +58,7 @@ const SkillCard = ({
       <div
         className="pointer-events-none absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-300"
         style={{
-          background: `radial-gradient(circle at ${position.x}px ${position.y}px, rgba(100, 244, 224, 0.2) 0%, transparent 70%)`,
+          background: `radial-gradient(circle at ${position.x}px ${position.y}px, rgba(100, 244, 224, 0.15) 0%, transparent 60%)`,
           opacity: opacity,
           transition: "opacity 0.3s ease",
         }}

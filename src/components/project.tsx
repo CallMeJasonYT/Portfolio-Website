@@ -42,42 +42,54 @@ const Project: React.FC<ProjectProps> = ({ project }) => {
 
   return (
     <div
-      className={`bg-zinc-800/30 backdrop-blur-sm rounded-xl border border-border overflow-hidden transition-all cursor-pointer relative group`}
+      className={`flex justify-between bg-zinc-800/30 backdrop-blur-sm rounded-xl border border-border overflow-hidden transition-all cursor-pointer relative group w-full h-full`}
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <a target="_blank" draggable="false" href={project.html_url}>
-        <div className="p-5 relative z-10">
-          <div className="flex justify-between items-start mb-3">
-            <h3 className="text-xl font-semibold text-white truncate">
+      <a
+        target="_blank"
+        draggable="false"
+        href={project.html_url}
+        className="flex flex-col h-full w-full"
+      >
+        <div className="p-5 relative z-10 flex flex-col h-full">
+          {/* Header section */}
+          <div className="flex justify-between items-start">
+            <h3 className="text-xl font-semibold text-white truncate flex-1">
               {project.name}
             </h3>
-            {project.isPinned && <IconPin size={20} className="text-primary" />}
+            {project.isPinned && (
+              <IconPin size={20} className="text-primary ml-2 flex-shrink-0" />
+            )}
           </div>
 
-          <p className="text-muted-foreground mb-4 line-clamp-2 h-12">
+          {/* Description section - takes available space */}
+          <p className="text-muted-foreground mt-4 flex-1">
             {project.description || "No description provided."}
           </p>
 
-          {/* Languages badges */}
-          <div className="mb-4 flex flex-wrap gap-2">
-            {project.languages.map((lang, index) => (
-              <span
-                key={index}
-                className="inline-flex items-center px-2 py-1 rounded-full text-xs text-white/65"
-                style={{ backgroundColor: `${lang.color}40` }}
-              >
+          {/* Languages badges - fixed section */}
+          {project.languages.length > 0 && (
+            <div className="mt-4 mb-4 flex flex-wrap gap-2">
+              {project.languages.map((lang, index) => (
                 <span
-                  className="w-2 h-2 rounded-full mr-1"
-                  style={{ backgroundColor: lang.color }}
-                />
-                {lang.name}
-              </span>
-            ))}
-          </div>
+                  key={index}
+                  className="inline-flex items-center px-2 py-1 rounded-full text-xs text-white/65"
+                  style={{ backgroundColor: `${lang.color}40` }}
+                >
+                  <span
+                    className="w-2 h-2 rounded-full mr-1"
+                    style={{ backgroundColor: lang.color }}
+                  />
+                  {lang.name}
+                </span>
+              ))}
+            </div>
+          )}
 
-          <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
+          {/* Stats section - fixed at bottom */}
+          <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mt-auto">
             <div className="flex space-x-4">
               <span className="flex items-center">
                 <IconStar size={16} className="mr-1 text-yellow-400" />
@@ -98,7 +110,7 @@ const Project: React.FC<ProjectProps> = ({ project }) => {
         <div
           className="pointer-events-none absolute inset-0 transition-opacity duration-300"
           style={{
-            background: `radial-gradient(circle at ${position.x}px ${position.y}px, rgba(100, 244, 224, 0.2) 0%, transparent 50%)`,
+            background: `radial-gradient(circle at ${position.x}px ${position.y}px, rgba(100, 244, 224, 0.15) 0%, transparent 60%)`,
             opacity: opacity,
           }}
         />

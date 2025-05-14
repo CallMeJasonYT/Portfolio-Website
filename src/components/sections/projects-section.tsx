@@ -7,8 +7,6 @@ import {
 } from "@/actions/fetch-github-repos";
 import { GithubProject } from "@/types/github-project";
 import { motion } from "motion/react";
-
-// Import shadcn Pagination components
 import {
   Pagination,
   PaginationContent,
@@ -31,11 +29,7 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({
   const [projects, setProjects] = useState<GithubProject[]>(
     initialData?.projects || []
   );
-  const [totalProjects, setTotalProjects] = useState<number>(
-    initialData?.totalProjects || 0
-  );
   const [loading, setLoading] = useState<boolean>(!initialData);
-  const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [responseTime, setResponseTime] = useState<number>(
     initialData?.responseTime || 0
@@ -48,12 +42,9 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({
         try {
           const response = await getRepositories();
           setProjects(response.projects);
-          setTotalProjects(response.totalProjects);
           setResponseTime(response.responseTime);
-          setError(null);
         } catch (err) {
           console.error("Failed to fetch GitHub projects:", err);
-          setError("Failed to load projects. Please try again later.");
         } finally {
           setLoading(false);
         }
@@ -74,7 +65,6 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({
     indexOfLastProject
   );
 
-  // Change page
   const goToPage = (pageNumber: number) => {
     setCurrentPage(pageNumber);
     // Scroll to top of the section when changing pages
