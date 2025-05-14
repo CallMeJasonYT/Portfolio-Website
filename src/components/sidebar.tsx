@@ -57,7 +57,7 @@ const Sidebar = ({ profileImage, name }: SidebarProps): ReactElement => {
 
     const fetchWeather = async () => {
       try {
-        const apiKey = process.env.NEXT_PUBLIC_WEATHER_API_KEY;
+        const apiKey = process.env.WEATHER_API_KEY;
         // Use a public CORS proxy
         const corsProxyUrl = "https://corsproxy.io/?";
         const targetUrl = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=Patra,Greece&aqi=no`;

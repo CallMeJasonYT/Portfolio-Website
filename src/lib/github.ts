@@ -1,7 +1,7 @@
 import { Octokit } from "@octokit/rest";
 
 export const octokit = new Octokit({
-  auth: process.env.NEXT_PUBLIC_GITHUB_API_KEY,
+  auth: process.env.GITHUB_API_KEY,
   log: {
     debug: console.debug,
     info: console.info,
