@@ -40,12 +40,6 @@ const links: NavbarLink[] = [
     tooltip: "My projects",
     href: "/#projects",
   },
-  {
-    name: "Contact",
-    icon: IconMail,
-    tooltip: "Contact Me",
-    href: "/#contact",
-  },
 ];
 
 const Navbar = (): ReactElement => {
