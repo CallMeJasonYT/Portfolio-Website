@@ -49,8 +49,7 @@ const SkillCard = ({
       onMouseLeave={handleMouseLeave}
       className={cn(
         "relative flex flex-col items-center gap-1 p-2 bg-zinc-800/30 backdrop-blur-sm overflow-hidden",
-        "border border-border rounded-lg hover:border-primary/50 hover:scale-103",
-        "transition-all transform-gpu duration-300 group",
+        "border border-border rounded-lg hover:border-primary/50 hover:scale-103 group",
         className
       )}
     >

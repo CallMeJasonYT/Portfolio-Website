@@ -82,13 +82,11 @@ const Sidebar = ({ profileImage, name }: SidebarProps): ReactElement => {
       }
     };
 
-    // Initial weather fetch
     fetchWeather();
 
     // Fetch weather every 30 minutes
     const weatherInterval = setInterval(fetchWeather, 30 * 60 * 1000);
 
-    // Cleanup
     return () => {
       clearInterval(timeInterval);
       clearInterval(weatherInterval);
@@ -133,16 +131,16 @@ const Sidebar = ({ profileImage, name }: SidebarProps): ReactElement => {
       </div>
 
       {/* Location */}
-      <div className="flex text-primary/60 gap-1 items-center">
+
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+        className="flex text-primary/60 gap-1 items-center"
+      >
         <IconLocationPin className="w-5" />
-        <motion.p
-          initial={{ opacity: 0, y: -20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
-          Patra, Greece
-        </motion.p>
-      </div>
+        <p>Patra, Greece</p>
+      </motion.div>
 
       {/* Weather and Time Widget */}
       <div className="w-full rounded-xl px-4 mb-6">

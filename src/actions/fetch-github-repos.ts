@@ -20,8 +20,6 @@ export const getRepositories = async (): Promise<GithubProjectResponse> => {
       };
     }>(graphQlQuery);
 
-    console.log("GitHub API Response:", JSON.stringify(response, null, 2));
-
     // Invalid response from GitHub
     if (!response?.user) {
       console.error("Invalid GitHub API response:", response);

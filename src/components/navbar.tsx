@@ -25,20 +25,38 @@ type NavbarLink = {
 };
 
 const links: NavbarLink[] = [
-  { icon: IconHome, tooltip: "Back to the start of the page", href: "/" },
-  { name: "About me", icon: IconUser, tooltip: "About me", href: "/#about" },
-  { name: "Skills", icon: IconBolt, tooltip: "My skillset", href: "/#skills" },
+  {
+    icon: IconHome,
+    tooltip: "Back to the start of the page",
+    href: "/",
+  },
+  {
+    name: "About me",
+    icon: IconUser,
+    tooltip: "About me",
+    href: "/#about",
+    sectionId: "about",
+  },
+  {
+    name: "Skills",
+    icon: IconBolt,
+    tooltip: "My skillset",
+    href: "/#skills",
+    sectionId: "skills",
+  },
   {
     name: "Experience",
     icon: IconMedal,
     tooltip: "My experience",
     href: "/#experience",
+    sectionId: "experience",
   },
   {
     name: "Projects",
     icon: IconBriefcase,
     tooltip: "My projects",
     href: "/#projects",
+    sectionId: "projects",
   },
 ];
 
@@ -47,10 +65,11 @@ const Navbar = (): ReactElement => {
   const [activeSection, setActiveSection] = useState<string>("about");
   const [hasScrolled, setHasScrolled] = useState<boolean>(false);
 
-  // Set initial active section
+  // Set initial active section based on URL hash
   useEffect(() => {
     if (path === "/") {
-      setActiveSection("about");
+      const hash = window.location.hash.replace("#", "");
+      setActiveSection(hash || "about");
     }
   }, [path]);
 
@@ -61,6 +80,7 @@ const Navbar = (): ReactElement => {
         .filter((link: NavbarLink) => link.sectionId)
         .map((link: NavbarLink) => document.getElementById(link.sectionId!))
         .filter(Boolean) as HTMLElement[];
+
       const scrollPosition = window.scrollY + window.innerHeight / 2; // Middle of the screen
 
       // Scroll Spy Pattern
@@ -75,8 +95,8 @@ const Navbar = (): ReactElement => {
         }
       }
     };
-    handleScroll();
 
+    handleScroll();
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -88,6 +108,27 @@ const Navbar = (): ReactElement => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Handle click to smoothly scroll to section
+  const handleLinkClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    link: NavbarLink
+  ) => {
+    if (link.sectionId) {
+      e.preventDefault();
+      const section = document.getElementById(link.sectionId);
+      if (section) {
+        const offsetTop = section.offsetTop - 80; // Offset for navbar
+        window.scrollTo({
+          top: offsetTop,
+          behavior: "smooth",
+        });
+
+        setActiveSection(link.sectionId);
+        window.history.pushState(null, "", `/#${link.sectionId}`);
+      }
+    }
+  };
 
   return (
     <motion.nav
@@ -102,29 +143,29 @@ const Navbar = (): ReactElement => {
     >
       {/* Links */}
       {links.map((link: NavbarLink, index: number) => {
-        const active: boolean =
-          path === "/" &&
-          link.sectionId !== undefined &&
-          activeSection === link.sectionId;
+        // Check if this link is active
+        const isActive: boolean =
+          link.sectionId !== undefined && activeSection === link.sectionId;
+
         return (
           <SimpleTooltip key={index} content={link.tooltip} side="bottom">
             <Link
               className={cn(
                 "px-[2px] sm:px-2 py-1.5",
                 "text-xs flex gap-1.5 sm:text-sm items-center hover:bg-zinc-700/30 font-light rounded-2xl transition-all transform-gpu",
-                active && "bg-zinc-700/30 text-primary"
+                isActive && "bg-zinc-700/30 text-primary font-medium"
               )}
               href={link.href}
               draggable={false}
+              onClick={(e) => handleLinkClick(e, link)}
             >
-              <link.icon
-                className={cn(
-                  link.href === "/" ? "block" : "hidden sm:block",
-                  "size-4"
-                )}
-              />
+              <link.icon className={cn("hidden sm:block size-4")} />
 
-              {link.name && <span className="block">{link.name}</span>}
+              {link.name && (
+                <span className={cn("block", isActive && "text-primary")}>
+                  {link.name}
+                </span>
+              )}
             </Link>
           </SimpleTooltip>
         );
@@ -132,4 +173,5 @@ const Navbar = (): ReactElement => {
     </motion.nav>
   );
 };
+
 export default Navbar;

@@ -16,6 +16,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface ProjectSectionProps {
   initialData?: GithubProjectResponse;
@@ -24,7 +25,7 @@ interface ProjectSectionProps {
 
 const ProjectSection: React.FC<ProjectSectionProps> = ({
   initialData,
-  projectsPerPage = 6, // Default to 3x2 grid (6 projects per page)
+  projectsPerPage = 6,
 }) => {
   const [projects, setProjects] = useState<GithubProject[]>(
     initialData?.projects || []
@@ -54,10 +55,8 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({
     loadProjects();
   }, [initialData]);
 
-  // Calculate total number of pages
+  // Calculate pagination
   const totalPages = Math.ceil(projects.length / projectsPerPage);
-
-  // Get current projects for the page
   const indexOfLastProject = currentPage * projectsPerPage;
   const indexOfFirstProject = indexOfLastProject - projectsPerPage;
   const currentProjects = projects.slice(
@@ -67,23 +66,21 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({
 
   const goToPage = (pageNumber: number) => {
     setCurrentPage(pageNumber);
-    // Scroll to top of the section when changing pages
     window.scrollTo({
       top: document.getElementById("projects")?.offsetTop || 0,
       behavior: "smooth",
     });
   };
 
-  // Generate pagination items based on current page and total pages
   const renderPaginationItems = () => {
     const items = [];
-    const maxVisiblePages = 4;
+    const maxVisiblePages = 5;
 
     items.push(
       <PaginationItem key="page-1">
         <PaginationLink
           href="#"
-          onClick={(e) => {
+          onClick={(e: React.MouseEvent) => {
             e.preventDefault();
             goToPage(1);
           }}
@@ -95,15 +92,15 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({
     );
 
     let startPage = Math.max(2, currentPage - Math.floor(maxVisiblePages / 2));
-    let endPage = Math.min(totalPages - 1, startPage + maxVisiblePages - 2);
+    let endPage = Math.min(totalPages - 1, startPage + maxVisiblePages - 3);
 
-    if (endPage - startPage < maxVisiblePages - 2) {
-      startPage = Math.max(2, endPage - (maxVisiblePages - 2));
+    if (endPage - startPage < maxVisiblePages - 3) {
+      startPage = Math.max(2, endPage - (maxVisiblePages - 3));
     }
 
     if (startPage > 2) {
       items.push(
-        <PaginationItem key="ellipsis-1">
+        <PaginationItem key="ellipsis-start">
           <PaginationEllipsis />
         </PaginationItem>
       );
@@ -114,7 +111,7 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({
         <PaginationItem key={`page-${i}`}>
           <PaginationLink
             href="#"
-            onClick={(e) => {
+            onClick={(e: React.MouseEvent) => {
               e.preventDefault();
               goToPage(i);
             }}
@@ -128,7 +125,7 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({
 
     if (endPage < totalPages - 1) {
       items.push(
-        <PaginationItem key="ellipsis-2">
+        <PaginationItem key="ellipsis-end">
           <PaginationEllipsis />
         </PaginationItem>
       );
@@ -139,7 +136,7 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({
         <PaginationItem key={`page-${totalPages}`}>
           <PaginationLink
             href="#"
-            onClick={(e) => {
+            onClick={(e: React.MouseEvent) => {
               e.preventDefault();
               goToPage(totalPages);
             }}
@@ -154,14 +151,34 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({
     return items;
   };
 
+  // Loading skeleton component
+  const ProjectSkeleton = () => (
+    <div className="bg-background/50 backdrop-blur-sm rounded-lg p-5 border border-gray-700/50">
+      <div className="space-y-3">
+        <Skeleton className="h-6 w-3/4 bg-gray-700/50" />
+        <Skeleton className="h-4 w-full bg-gray-700/50" />
+        <Skeleton className="h-4 w-4/5 bg-gray-700/50" />
+        <div className="flex gap-2 mt-4">
+          <Skeleton className="h-6 w-16 rounded-full bg-gray-700/50" />
+          <Skeleton className="h-6 w-16 rounded-full bg-gray-700/50" />
+          <Skeleton className="h-6 w-16 rounded-full bg-gray-700/50" />
+        </div>
+        <div className="mt-4 pt-4 border-t border-gray-700/50">
+          <Skeleton className="h-8 w-full bg-gray-700/50" />
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <section id="projects" className="py-20">
       <div className="container">
+        {/* Header Section */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6 }}
-          className="flex flex-col gap-10 mb-6"
+          className="flex flex-col gap-10 mb-8"
         >
           <div className="flex flex-col gap-2 max-w-3xl">
             <motion.h1
@@ -186,34 +203,68 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({
           </div>
         </motion.div>
 
-        {projects.length === 0 && !loading ? (
-          <div className="text-center p-8 bg-zinc-800/30 rounded-lg">
-            <p className="text-white">No projects found.</p>
+        {/* Content Section */}
+        {loading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[...Array(projectsPerPage)].map((_, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.3, delay: index * 0.1 }}
+              >
+                <ProjectSkeleton />
+              </motion.div>
+            ))}
           </div>
+        ) : projects.length === 0 ? (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-center p-12 bg-zinc-800/30 rounded-lg"
+          >
+            <p className="text-white text-xl">No projects found.</p>
+            <p className="text-muted-foreground mt-2">
+              Your GitHub repositories will appear here.
+            </p>
+          </motion.div>
         ) : (
           <>
+            {/* Projects Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {currentProjects.map((project) => (
-                <Project key={project.id} project={project} />
+              {currentProjects.map((project, index) => (
+                <motion.div
+                  key={project.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: index * 0.1 }}
+                >
+                  <Project project={project} />
+                </motion.div>
               ))}
             </div>
 
-            {/* shadcn Pagination */}
+            {/* Pagination */}
             {totalPages > 1 && (
-              <div className="mt-8">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3, delay: 0.5 }}
+                className="mt-10"
+              >
                 <Pagination>
                   <PaginationContent>
                     <PaginationItem>
                       <PaginationPrevious
                         href="#"
-                        onClick={(e) => {
+                        onClick={(e: React.MouseEvent) => {
                           e.preventDefault();
                           if (currentPage > 1) goToPage(currentPage - 1);
                         }}
                         className={
                           currentPage === 1
                             ? "pointer-events-none opacity-50"
-                            : ""
+                            : "cursor-pointer"
                         }
                       />
                     </PaginationItem>
@@ -223,7 +274,7 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({
                     <PaginationItem>
                       <PaginationNext
                         href="#"
-                        onClick={(e) => {
+                        onClick={(e: React.MouseEvent) => {
                           e.preventDefault();
                           if (currentPage < totalPages)
                             goToPage(currentPage + 1);
@@ -231,21 +282,26 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({
                         className={
                           currentPage === totalPages
                             ? "pointer-events-none opacity-50"
-                            : ""
+                            : "cursor-pointer"
                         }
                       />
                     </PaginationItem>
                   </PaginationContent>
                 </Pagination>
-              </div>
-            )}
 
-            {/* Page indicator */}
-            {totalPages > 1 && (
-              <div className="text-center mt-4 text-sm text-muted-foreground">
-                Page {currentPage} of {totalPages} ({projects.length} projects).
-                Took {(responseTime / 1000).toFixed(2)}s.
-              </div>
+                {/* Page indicator */}
+                <div className="text-center mt-6 text-sm text-muted-foreground">
+                  <p>
+                    Page {currentPage} of {totalPages} ({projects.length}{" "}
+                    projects)
+                  </p>
+                  {responseTime > 0 && (
+                    <p className="text-xs mt-1">
+                      Loaded in {(responseTime / 1000).toFixed(2)}s
+                    </p>
+                  )}
+                </div>
+              </motion.div>
             )}
           </>
         )}

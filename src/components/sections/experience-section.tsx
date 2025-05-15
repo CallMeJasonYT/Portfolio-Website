@@ -73,7 +73,7 @@ const ExperienceSection = (): ReactElement => {
           <motion.div
             className=""
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            whileInView={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
             <div className="space-y-12">
