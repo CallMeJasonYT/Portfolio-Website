@@ -17,7 +17,7 @@ const AboutSection = (): ReactElement => (
       {/* Header and Socials */}
       <div className="flex flex-col gap-2.5">
         <motion.h1
-          className="text-4xl md:text-5xl font-bold text-white"
+          className="text-4xl md:text-5xl font-bold "
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
@@ -86,7 +86,7 @@ const SocialLink = ({
   >
     <SimpleTooltip content={social.tooltip} side="bottom">
       <Link
-        className="px-2.5 py-1.5 flex gap-2 items-center text-sm text-white/90 bg-background/80 border border-border rounded-xl hover:bg-zinc-900/55 hover:text-primary transition-colors transform-gpu"
+        className="px-2.5 py-1.5 flex gap-2 items-center text-sm /90 bg-background/80 border border-border rounded-xl hover:bg-zinc-900/55 hover:text-primary transition-colors transform-gpu"
         href={social.href}
         target={social.href.startsWith("http") ? "_blank" : undefined}
         draggable={false}
