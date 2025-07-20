@@ -139,7 +139,7 @@ const Sidebar = ({ profileImage, name }: SidebarProps): ReactElement => {
         className="flex text-primary/60 gap-1 items-center"
       >
         <IconLocationPin className="w-5" />
-        <p>Patra, Greece</p>
+        <p>Keratsini, Greece</p>
       </motion.div>
 
       {/* Weather and Time Widget */}
