@@ -14,7 +14,7 @@ export type WeatherResponse = {
 };
 
 export const getWeatherData = async (
-  location: string = "Patra, Greece"
+  location: string = "Keratsini, Greece"
 ): Promise<WeatherResponse> => {
   try {
     const apiKey = process.env.WEATHER_API_KEY;
