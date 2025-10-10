@@ -107,7 +107,7 @@ const ExperienceSection = (): ReactElement => {
                     {item.role || item.degree}
                   </h3>
 
-                  <h4 className="text-lg font-medium text-primary mb-2">
+                  <h4 className="text-lg font-medium text-primary">
                     {item.institution}
                     {item.location && (
                       <span className="text-muted-foreground text-sm ml-2">
@@ -115,6 +115,14 @@ const ExperienceSection = (): ReactElement => {
                       </span>
                     )}
                   </h4>
+
+                  <h3 className="text-lg font-medium text-primary">
+                    {item.grade && (
+                      <span className="text-muted-foreground">
+                        Grade: {item.grade}
+                      </span>
+                    )}
+                  </h3>
 
                   {item.description && (
                     <p className="text-muted-foreground">{item.description}</p>

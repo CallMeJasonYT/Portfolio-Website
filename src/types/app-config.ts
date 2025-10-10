@@ -27,6 +27,7 @@ export type ExperienceItem = {
   location: string;
   timeframe: string;
   description?: string;
+  grade?: string;
 };
 
 export type ExperienceCategory = "Career" | "Education";

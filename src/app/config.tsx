@@ -176,7 +176,8 @@ export const appConfig: AppConfig = {
         icon: "media/ceid.png",
         degree: "MSc in Computer Engineering",
         location: "Patra, Greece",
-        timeframe: "Sept. 2024 - Now",
+        timeframe: "Sept. 2024 - Sept. 2025",
+        grade: "10/10",
       },
       {
         institution: "University of Patras",
@@ -184,6 +185,7 @@ export const appConfig: AppConfig = {
         degree: "BSc in Computer Engineering",
         location: "Patra, Greece",
         timeframe: "Sept. 2020 - July 2024",
+        grade: "7.84/10",
       },
     ],
   },
