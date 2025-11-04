@@ -161,13 +161,12 @@ export const appConfig: AppConfig = {
   experience: {
     Career: [
       {
-        institution: "",
-        location: "",
-        icon: "",
-        role: "Looking to be hired",
-        timeframe: "Available Now",
-        description:
-          "I'm currently seeking new opportunities in software development. Feel free to contact me with any potential roles or projects!",
+        institution: "Accenture",
+        location: "Athens, Greece",
+        icon: "media/accenture.png",
+        role: "Custom Software Engineering Associate",
+        timeframe: "Nov. 2025 - Present",
+        description: "",
       },
     ],
     Education: [
